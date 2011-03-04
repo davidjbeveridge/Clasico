@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clasico Test</title>
+    <script type="text/javascript" language="JavaScript" src="clasico.js"></script>
+    <script type="text/javascript" language="JavaScript">
+      var ParentClass = new Class({
+        name: 'ParentClass',
+        initialize: function(){
+          this.parent_var = true;
+        },
+        public: {
+          parent_method: function(){alert('Parent method');}
+        }
+      });
+
+      var ChildClass = new Class({
+        name: 'ChildClass',
+        initialize: function(){this.child_var = true;},
+        extends: ParentClass,
+        public: {
+          child_method: function(){alert('Child method');}
+        }
+      });
+
+      var my_child = new ChildClass;
+      console.log(my_child);
+    </script>
+  </head>
+  <body></body>
+</html>
