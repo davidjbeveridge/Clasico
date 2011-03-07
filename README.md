@@ -1,7 +1,6 @@
 Clásico
 =======
 Classic, not convoluted.
-------------------------
 
 Clásico is designed to provide a simple DSL for classes and classical
 inheritance in JavaScript.  Writing classes is usually a real pain in the
