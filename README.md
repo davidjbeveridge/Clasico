@@ -32,3 +32,11 @@ Declaring a class:
         myOtherMethod: function(){ ... }
       }
     });
+
+
+How to help
+-----------
+
+The biggest need I have on Clasico right now is better documentation
+(as usual).  Also, I'm trying to figure out a way to generalize private
+variable/method declaration.
