@@ -79,18 +79,14 @@ function Class(attributes){
 
   var constructor;
 
-  var func_name = attributes.name || 'Constructor';
-  func_name = func_name.replace(/[^a-zA-Z0-9_]/g, '');
-
   // Create a constructor function:
   if(Kernel.is_method(attributes.extends)){ // Use a parent constructor
-    eval("function "+func_name+"(){\
-      attributes.extends.apply(this,arguments);\
-      if(Kernel.is_method(attributes.initialize))  {\
-        attributes.initialize.apply(this,arguments);\
-      }\
-    };");
-    constructor = eval(func_name);
+    constructor = function(){
+      attributes.extends.apply(this,arguments);
+      if(Kernel.is_method(attributes.initialize))  {
+        attributes.initialize.apply(this,arguments);
+      }
+    };
     constructor.superclass = attributes.extends;
   }
   else if(Kernel.is_method(attributes.initialize)) {  // Or just the one that was passed
@@ -108,6 +104,10 @@ function Class(attributes){
   // Decorate with Kernel and Class
   Kernel.extend(constructor.prototype,Kernel.prototype);
   Kernel.extend(constructor.prototype,Class.prototype);
+
+  if(attributes.name) {
+    constructor.prototype.class = attributes.name;
+  }
 
   // Inherit instance methods from our parent...
   if(attributes.extends)  {
@@ -129,6 +129,12 @@ function Class(attributes){
   // Set class instances to reference the correct constructor
   constructor.prototype.constructor = constructor;
 
+  // Finally, we'll check for our interface:
+
+  if(attributes.implements && Kernel.is_method(attributes.implements.implemented_in))  {
+    attributes.implements.implemented_in(new constructor);
+  }
+
   return constructor;
 
 }
@@ -146,7 +152,10 @@ Kernel.extend(Class.prototype,{
     }
   },
   implements: function(some_interface){
-    return (some_interface instanceof Interface) && Kernel.is_method(some_interface.implemented_in) && some_interface.implemented_in(this);
+    if(!(some_interface instanceof Interface))  {
+      throw new Error("Class#implements: expected Interface.");
+    }
+    return Kernel.is_method(some_interface.implemented_in) && some_interface.implemented_in(this);
   },
   define_method: function(method_name,method_body){
     return this.constructor.prototype[method_name] = method_body;
@@ -167,19 +176,33 @@ Class.new = function(attributes){
 }
 
 
-
-function Interface(methods) {
-  if(typeof methods !== 'object') {
-    throw new TypeExpectError('Interface','Object',methods);
+var Interface = Class.new({
+  name: 'Interface',
+  initialize: function(methods) {
+    if(typeof methods !== 'object') {
+      throw new TypeExpectError('Interface','Object',methods);
+    }
+    this.methods = [];
+    for(methodName in methods) {
+      if(Kernel.is_method(methods[methodName])) { this.methods.push(methodName); }
+    }
+  },
+  public: {
+    implemented_in: function(obj){
+      for(var i = 0, max = this.methods.length; i < max; i++) {
+        if( !Kernel.is_method(obj[this.methods[i]]) )  {
+          throw new Error("Interface: "+this.methods[i]+" method missing; required by interface.");
+        }
+      }
+      return true;
+    }
   }
-  this.methods = [];
-  for(methodName in methods) {
-    if(typeof methods[methodName] === 'function') { this.methods.push(methodName); }
-  }
-}
+});
 
-function TypeExpectError(caller,expected,got){
-  this.message = caller+': expected object of type '+expected+'; got '+typeof(got)
-}
-TypeExpectError.prototype = new Error;
-TypeExpectError.prototype.constructor = TypeExpectError
+var TypeExpectError = Class.new({
+  name: 'TypeExpectError',
+  extends: Error,
+  initialize: function(caller,expected,got) {
+    this.message = caller+': expected object of type '+expected+'; got '+typeof(got);
+  }
+});

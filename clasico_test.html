@@ -4,6 +4,14 @@
     <title>Clasico Test</title>
     <script type="text/javascript" language="JavaScript" src="clasico.js"></script>
     <script type="text/javascript" language="JavaScript">
+      var MyGoodInterface = new Interface({
+        parent_method: (new Function)
+      });
+
+      var MyBadInterface = new Interface({
+        badMethodNoExists: (new Function)
+      });
+
       var ParentClass = new Class({
         name: 'ParentClass',
         initialize: function(){
@@ -18,6 +26,7 @@
         name: 'ChildClass',
         initialize: function(){this.child_var = true;},
         extends: ParentClass,
+        implements: MyGoodInterface,
         public: {
           child_method: function(){alert('Child method');}
         }
