@@ -19,7 +19,7 @@ framework agnosticish.
 
 Declaring a class:
 ------------------
-(
+({
   // Assume that MyParentClass is already defined.
   var MyClass = Class.new({
     name: 'MyClass',
@@ -34,4 +34,4 @@ Declaring a class:
     }
   });
 
-)
+})
