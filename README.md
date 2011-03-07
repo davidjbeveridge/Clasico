@@ -20,7 +20,7 @@ framework agnosticish.
 Declaring a class:
 ------------------
 
-  // Assume that MyParentClass is already defined.
+  {// Assume that MyParentClass is already defined.
   var MyClass = Class.new({
     name: 'MyClass',
     extends: MyParentClass,
@@ -32,5 +32,5 @@ Declaring a class:
       myMethod: function(){ ... },
       myOtherMethod: function(){ ... }
     }
-  });
+  });}
 
