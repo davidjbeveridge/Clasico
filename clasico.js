@@ -36,9 +36,31 @@ Kernel.prototype = {
     }
   }
 };
-Kernel.extend = function(a,b) {
-  for(prop in b)  {
-    a[prop] = b[prop];
+Kernel.extend = function() {
+  try
+  {
+    var
+      i = 1,
+      force = false,
+      target = arguments[0];
+    ;
+    if(target === true) {
+      force = true;
+      target = arguments[i++];
+    }
+    for(var max = arguments.length; i < max; i++)  {
+      for(prop in arguments[i])  {
+        if(!target[prop] || force) {
+          target[prop] = arguments[i][prop];
+        }
+      }
+    }
+  }
+  catch (e) {
+    return {};
+  }
+  finally {
+    return target;
   }
 };
 Kernel.is_method = function(func) {
@@ -58,6 +80,7 @@ function Class(attributes){
   var constructor;
 
   var func_name = attributes.name || 'Constructor';
+  func_name = func_name.replace(/[^a-zA-Z0-9_]/g, '');
 
   // Create a constructor function:
   if(Kernel.is_method(attributes.extends)){ // Use a parent constructor
@@ -89,7 +112,7 @@ function Class(attributes){
   // Inherit instance methods from our parent...
   if(attributes.extends)  {
     if(Kernel.is_method(attributes.extends)) {
-      Kernel.extend(constructor.prototype, (attributes.extends.prototype));
+      constructor.prototype = new attributes.extends;
     }
     else  {
       if(Kernel.is_object(attributes.extends)) {
