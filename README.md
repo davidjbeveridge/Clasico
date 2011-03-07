@@ -19,19 +19,16 @@ framework agnosticish.
 
 Declaring a class:
 ------------------
-({
-  // Assume that MyParentClass is already defined.
-  var MyClass = Class.new({
-    name: 'MyClass',
-    extends: MyParentClass,
-    implements: MyInterface
-    initialize: function(){
-      // Constructor
-    },
-    public: {
-      myMethod: function(){ ... },
-      myOtherMethod: function(){ ... }
-    }
-  });
-
-})
+    // Assume that MyParentClass is already defined.
+    var MyClass = Class.new({
+      name: 'MyClass',
+      extends: MyParentClass,
+      implements: MyInterface
+      initialize: function(){
+        // Constructor
+      },
+      public: {
+        myMethod: function(){ ... },
+        myOtherMethod: function(){ ... }
+      }
+    });
