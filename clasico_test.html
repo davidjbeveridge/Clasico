@@ -27,8 +27,12 @@
         initialize: function(){this.child_var = true;},
         extends: ParentClass,
         implements: MyGoodInterface,
+        private: {
+          private_method: function(){ alert("My private method called."); }
+        },
         public: {
-          child_method: function(){alert('Child method');}
+          child_method: function(){alert('Child method');},
+          public_method: function(){ return arguments; }
         }
       });
 
