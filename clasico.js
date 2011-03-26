@@ -55,12 +55,10 @@ Kernel.extend = function() {
         }
       }
     }
+    return target;
   }
   catch (e) {
     return {};
-  }
-  finally {
-    return target;
   }
 };
 Kernel.is_method = function(func) {
