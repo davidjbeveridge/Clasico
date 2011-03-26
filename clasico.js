@@ -122,19 +122,9 @@ function Class(attributes){
     }
   }
 
-  // Assign private methods...
-  if(Kernel.is_object(attributes.private))  {
-    Kernel.extend(private,attributes.private);
-  }
-
   // Assign public methods...
   if(Kernel.is_object(attributes.public))  {
-    Kernel.extend(private, attributes.public);
-    // And decorate the prototype to expose our public private:
-    for(name in attributes.public)  {
-      var public_method = private[name];
-      constructor.prototype[name] = (function(){ Array.prototype.push.call(arguments,private); return public_method.apply(this,arguments); });
-    }
+    Kernel.extend(constructor.prototype, attributes.public);
   }
 
 
