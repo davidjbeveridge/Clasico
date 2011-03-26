@@ -18,7 +18,11 @@
           this.parent_var = true;
         },
         public: {
-          parent_method: function(){alert('Parent method');}
+          parent_method: function(){alert('Parent method');},
+          overwrite_me: function(){ return "Parent"; }
+        },
+        static: {
+          static_method: function(){ return "Parent Static Method"; }
         }
       });
 
@@ -27,12 +31,12 @@
         initialize: function(){this.child_var = true;},
         extends: ParentClass,
         implements: MyGoodInterface,
-        private: {
-          private_method: function(){ alert("My private method called."); }
-        },
         public: {
           child_method: function(){alert('Child method');},
-          public_method: function(){ return arguments; }
+          overwrite_me: function(){ return "Child"; }
+        },
+        static: {
+          static_method: function() { return "Child Static Method"; }
         }
       });
 

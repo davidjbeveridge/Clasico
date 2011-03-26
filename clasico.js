@@ -110,8 +110,12 @@ function Class(attributes){
     constructor.prototype.class = attributes.name;
   }
 
-  // Inherit instance methods from our parent...
+  // Inherit from our parent...
   if(attributes.extends)  {
+    // Static members...
+    Kernel.extend(constructor, attributes.extends);
+
+    // Prototype...
     if(Kernel.is_method(attributes.extends)) {
       constructor.prototype = new attributes.extends;
     }
@@ -124,7 +128,12 @@ function Class(attributes){
 
   // Assign public methods...
   if(Kernel.is_object(attributes.public))  {
-    Kernel.extend(constructor.prototype, attributes.public);
+    Kernel.extend(true, constructor.prototype, attributes.public);
+  }
+
+  // Assign static methods...
+  if(Kernel.is_object(attributes.static)) {
+    Kernel.extend(true, constructor, attributes.static);
   }
 
   // Set class instances to reference the correct constructor
