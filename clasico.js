@@ -127,14 +127,6 @@ function Class(attributes){
     Kernel.extend(constructor.prototype, attributes.public);
   }
 
-
-  // Assign own instance methods...
-  /*
-  if(Kernel.is_object(attributes.public))  {
-    Kernel.extend(constructor.prototype,attributes.public);
-  }
-  */
-
   // Set class instances to reference the correct constructor
   constructor.prototype.constructor = constructor;
 
