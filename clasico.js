@@ -69,16 +69,12 @@ Kernel.is_object = function(obj)  {
   return Boolean(typeof(obj) === 'object');
 };
 
-
 function Class(attributes){
   if(typeof attributes !== 'object')  {
     throw new TypeExpectError('Class','Object',attributes);
   }
 
-  var
-    constructor,
-    private = {}
-  ;
+  var constructor;
 
   // Create a constructor function:
   if(Kernel.is_method(attributes.extends)){ // Use a parent constructor
@@ -103,8 +99,9 @@ function Class(attributes){
   // Make a prototype:
   constructor.prototype = new Object;
   // Decorate with Kernel and Class
-  Kernel.extend(constructor.prototype,Kernel.prototype);
-  Kernel.extend(constructor.prototype,Class.prototype);
+  constructor.include = Class.include;
+  Kernel.extend(true, constructor.prototype, Kernel.prototype);
+  Kernel.extend(true, constructor.prototype, Class.prototype);
 
   if(attributes.name) {
     constructor.prototype.class = attributes.name;
@@ -185,6 +182,45 @@ Class.new = function(attributes){
   return new Class(attributes);
 }
 
+Class.include = function(mod){
+  if(mod.instance_of && mod.instance_of(Module))  {
+    mod.decorate(this);
+  }
+  else if(Kernel.is_function(mod)) {
+    Kernel.extend(true, this, mod);
+    Kernel.extend(true, this.prototype, mod.prototype);
+  }
+}
+
+var Module = Class.new({
+  name: 'Module',
+  initialize: function(attributes){
+    var
+      public = Kernel.is_object(attributes.public) ? attributes.public : {},
+      static = Kernel.is_object(attributes.static) ? attributes.static : {}
+    ;
+    this.decorate = function(mod)  {
+      if(Kernel.is_function(mod)) {
+        Kernel.extend(true, mod, static);
+        //Kernel.extend(true, mod.prototype, public);
+        for(prop_name in public)  {
+          if(Kernel.is_method(public[prop_name])) {
+            mod.prototype[prop_name] = function(){
+              return public[prop_name].apply(this,arguments);
+            }
+          }
+          else {
+            mod.prototype[prop_name] = public[prop_name];
+          }
+
+        }
+      }
+    };
+  },
+  public: {
+    include: function(){ Class.prototype.include.apply(this,arguments); }
+  }
+});
 
 var Interface = Class.new({
   name: 'Interface',

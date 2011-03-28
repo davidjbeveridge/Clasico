@@ -12,6 +12,12 @@
         badMethodNoExists: (new Function)
       });
 
+      var TestModule = new Module({
+        public: {
+          test_method: function(){ return 'Test Method exists.'; }
+        }
+      });
+
       var ParentClass = new Class({
         name: 'ParentClass',
         initialize: function(){
