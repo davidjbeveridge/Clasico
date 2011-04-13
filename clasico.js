@@ -103,6 +103,9 @@ function Class(attributes){
   constructor.include = Class.include;
   Kernel.extend(true, constructor.prototype, Kernel.prototype);
   Kernel.extend(true, constructor.prototype, Class.prototype);
+	
+	//Create a static 'new' method:
+	constructor.new = function(){ return new constructor(); }
 
   if(attributes.name) {
     constructor.prototype.class = attributes.name;
