@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 */
 
+// testin git config
+
 function Kernel(){};
 Kernel.prototype = {
   extend: function(obj) {
