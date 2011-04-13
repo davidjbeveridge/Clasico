@@ -24,15 +24,13 @@ THE SOFTWARE.
 
 */
 
-// testin git config
-
-function Kernel(){};
+function Kernel(){}
 Kernel.prototype = {
   extend: function(obj) {
     Kernel.extend(this,obj);
   },
   send: function(){
-    fnName = Array.prototype.shift.call(arguments);
+    var fnName = Array.prototype.shift.call(arguments);
     if(Kernel.is_method(this[fnName]))  {
       return this[fnName].apply(this,arguments);
     }
@@ -43,14 +41,15 @@ Kernel.extend = function() {
   {
     var
       i = 1,
+			max = arguments.length,
       force = false,
-      target = arguments[0];
+      target = arguments[0]
     ;
     if(target === true) {
       force = true;
       target = arguments[i++];
     }
-    for(var max = arguments.length; i < max; i++)  {
+    for( ; i < max; i++)  {
       for(prop in arguments[i])  {
         if(!target[prop] || force) {
           target[prop] = arguments[i][prop];
