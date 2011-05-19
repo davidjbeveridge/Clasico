@@ -177,7 +177,7 @@ Kernel.extend(Class.prototype,{
   instance_of: function(klass){
     return Boolean( this.constructor === klass );
   },
-  responds_to: function(method_name){
+  respond_to: function(method_name){
     return Kernel.is_method(this[method_name]);
   }
 });
