@@ -78,14 +78,14 @@ function Class(attributes){
   var constructor;
 
   // Create a constructor function:
-  if(Kernel.is_method(attributes.extends)){ // Use a parent constructor
+  if(Kernel.is_method(attributes.extend)){ // Use a parent constructor
     constructor = function(){
-      attributes.extends.apply(this,arguments);
+      attributes.extend.apply(this,arguments);
       if(Kernel.is_method(attributes.initialize))  {
         attributes.initialize.apply(this,arguments);
       }
     };
-    constructor.superclass = attributes.extends;
+    constructor.superclass = attributes.extend;
   }
   else if(Kernel.is_method(attributes.initialize)) {  // Or just the one that was passed
     constructor = function(){
@@ -105,24 +105,24 @@ function Class(attributes){
   Kernel.extend(true, constructor.prototype, Class.prototype);
 	
 	//Create a static 'new' method:
-	constructor.new = function(){ return new constructor(); }
+	constructor.make = function(){ return new constructor(); }
 
   if(attributes.name) {
-    constructor.prototype.class = attributes.name;
+    constructor.prototype.klass = attributes.name;
   }
 
   // Inherit from our parent...
-  if(attributes.extends)  {
+  if(attributes.extend)  {
     // Static members...
-    Kernel.extend(constructor, attributes.extends);
+    Kernel.extend(constructor, attributes.extend);
 
     // Prototype...
-    if(Kernel.is_method(attributes.extends)) {
-      constructor.prototype = new attributes.extends;
+    if(Kernel.is_method(attributes.extend)) {
+      constructor.prototype = new attributes.extend;
     }
     else  {
-      if(Kernel.is_object(attributes.extends)) {
-        Kernel.extend(constructor.prototype, attributes.extends);
+      if(Kernel.is_object(attributes.extend)) {
+        Kernel.extend(constructor.prototype, attributes.extend);
       }
     }
   }
@@ -152,7 +152,7 @@ function Class(attributes){
 
 Class.prototype = new Function;
 Kernel.extend(Class.prototype,{
-  extends: function(parent_class){
+  extend: function(parent_class){
     if(Kernel.is_method(parent_class)) {
       Kernel.extend(this.constructor.prototype, (parent_class.prototype));
     }
@@ -182,7 +182,7 @@ Kernel.extend(Class.prototype,{
   }
 });
 
-Class.new = function(attributes){
+Class.make = function(attributes){
   return new Class(attributes);
 }
 
@@ -196,7 +196,7 @@ Class.include = function(mod){
   }
 }
 
-var Module = Class.new({
+var Module = Class.make({
   name: 'Module',
   initialize: function(attributes){
     var
@@ -226,7 +226,7 @@ var Module = Class.new({
   }
 });
 
-var Interface = Class.new({
+var Interface = Class.make({
   name: 'Interface',
   initialize: function(methods) {
     if(typeof methods !== 'object') {
@@ -249,9 +249,9 @@ var Interface = Class.new({
   }
 });
 
-var TypeExpectError = Class.new({
+var TypeExpectError = Class.make({
   name: 'TypeExpectError',
-  extends: Error,
+  extend: Error,
   initialize: function(caller,expected,got) {
     this.message = caller+': expected object of type '+expected+'; got '+typeof(got);
   }
