@@ -24,51 +24,68 @@ THE SOFTWARE.
 
 */
 
-function Kernel(){}
-Kernel.prototype = {
-  extend: function(obj) {
-    Kernel.extend(this,obj);
-  },
-  send: function(){
-    var fnName = Array.prototype.shift.call(arguments);
-    if(Kernel.is_method(this[fnName]))  {
-      return this[fnName].apply(this,arguments);
-    }
-  }
-};
-Kernel.extend = function() {
-  try
-  {
-    var
-      i = 1,
+var Kernel = (function(){
+	function Kernel(){}
+	Kernel.prototype = {
+		extend: function extend(obj) {
+			Kernel.extend(this,obj);
+		},
+		send: function send(){
+			var fnName = Array.prototype.shift.call(arguments);
+			if(Kernel.is_method(this[fnName]))  {
+				return this[fnName].apply(this,arguments);
+			}
+		}
+	};
+	Kernel.extend = function extend() {
+		try
+		{
+			var
+			i = 1,
 			max = arguments.length,
-      force = false,
-      target = arguments[0]
-    ;
-    if(target === true) {
-      force = true;
-      target = arguments[i++];
-    }
-    for( ; i < max; i++)  {
-      for(prop in arguments[i])  {
-        if(!target[prop] || force) {
-          target[prop] = arguments[i][prop];
-        }
-      }
-    }
-    return target;
-  }
-  catch (e) {
-    return {};
-  }
-};
-Kernel.is_method = function(func) {
-  return Boolean(func && typeof(func) === 'function');
-};
-Kernel.is_function = Kernel.is_method;
-Kernel.is_object = function(obj)  {
-  return Boolean(typeof(obj) === 'object');
-};
+			force = false,
+			target = arguments[0]
+			;
+			if(target === true) {
+				force = true;
+				target = arguments[i++];
+			}
+			for( ; i < max; i++)  {
+				for(prop in arguments[i])  {
+					if(!target[prop] || force) {
+						target[prop] = arguments[i][prop];
+					}
+				}
+			}
+			return target;
+		}
+		catch (e) {
+			return {};
+		}
+	};
+	Kernel.is_method = function is_method(thing) {
+		return Boolean(thing && typeof(thing) === 'function');
+	};
+	Kernel.is_function = Kernel.is_method;
+	Kernel.is_object = function is_thingect(thing)  {
+		return Boolean(typeof(thing) === 'object' && !Kernel.is_null(thing));
+	};
+	Kernel.is_null = function is_null(thing)	{
+		return Boolean(thing === null);
+	};
+	Kernel.is_string = function is_string(thing)	{
+		return Boolean(typeof thing === 'string');
+	};
+	Kernel.is_number = function is_number(thing)	{
+		return Boolean(typeof thing === 'number');
+	};
+	Kernel.defined = function defined(thing)	{
+		return Boolean(typeof thing == undefined || Kernel.is_null(thing));
+	};
+	
+	return Kernel;
+})();
+
 
 function Class(attributes){
   if(typeof attributes !== 'object')  {
