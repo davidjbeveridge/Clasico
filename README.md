@@ -1,5 +1,5 @@
-Clásico
-=======
+#Clásico
+
 Classic, not convoluted.
 
 Clásico is designed to provide a simple DSL for classes and classical
@@ -17,26 +17,30 @@ tend to use jQuery a lot (and sometimes other libraries), but need some
 structure to base the rest of my code on.  Anywho, this should be fairly
 framework agnosticish.
 
-Declaring a class:
-------------------
-    // Assume that MyParentClass is already defined.
-    var MyClass = Class.new({
-      name: 'MyClass',
-      extends: MyParentClass,
-      implements: MyInterface
-      initialize: function(){
-        // Constructor
-      },
-      public: {
-        myMethod: function(){ ... },
-        myOtherMethod: function(){ ... }
-      }
-    });
+##Declaring a class:
 
+```javascript
+// Assume that MyParentClass is already defined.
+var MyClass = Class.new({
+  name: 'MyClass',
+  extends: MyParentClass,
+  implements: MyInterface
+  initialize: function(){
+    // Constructor
+  },
+  public: {
+    myMethod: function(){ ... },
+    myOtherMethod: function(){ ... }
+  }
+});
+```
 
-How to help
------------
+## TODO
 
-The biggest need I have on Clasico right now is better documentation
-(as usual).  Also, I'm trying to figure out a way to generalize private
-variable/method declaration.
+* Finish test suite.
+  - Inheritance
+  - Modules
+  - Inclusion
+  - Interfaces
+  - Kernel methods
+

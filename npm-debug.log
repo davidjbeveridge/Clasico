@@ -1,0 +1,62 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'jasmine' ]
+info using npm@1.1.1
+info using node@v0.7.4
+verbose config file /Users/davidbeveridge/.npmrc
+verbose config file /usr/local/etc/npmrc
+verbose config file /usr/local/lib/node_modules/npm/npmrc
+verbose caching /Users/davidbeveridge/node_modules/eco/package.json
+verbose loadDefaults eco@1.1.0-rc-3
+verbose caching /Users/davidbeveridge/node_modules/express/package.json
+verbose loadDefaults express@1.0.7
+verbose caching /Users/davidbeveridge/node_modules/jasmine-node/package.json
+verbose loadDefaults jasmine-node@1.0.22
+verbose caching /Users/davidbeveridge/node_modules/json/package.json
+verbose loadDefaults json@0.0.10
+verbose caching /Users/davidbeveridge/node_modules/less/package.json
+verbose loadDefaults less@1.3.0
+verbose caching /Users/davidbeveridge/node_modules/should/package.json
+verbose loadDefaults should@0.6.0
+verbose caching /Users/davidbeveridge/node_modules/spine/package.json
+verbose loadDefaults spine@1.0.6
+verbose caching /Users/davidbeveridge/node_modules/spine.app/package.json
+verbose loadDefaults spine.app@0.3.2
+verbose caching /Users/davidbeveridge/node_modules/strata/package.json
+verbose loadDefaults strata@0.9.0
+verbose caching /Users/davidbeveridge/node_modules/url/package.json
+verbose loadDefaults url@0.4.9
+verbose caching /Users/davidbeveridge/node_modules/watch/package.json
+verbose loadDefaults watch@0.5.0
+verbose caching /Users/davidbeveridge/node_modules/web/package.json
+verbose loadDefaults web@0.0.0
+verbose cache add [ 'jasmine', null ]
+silly cache add: name, spec, args [ undefined, 'jasmine', [ 'jasmine', null ] ]
+verbose parsed url { pathname: 'jasmine', path: 'jasmine', href: 'jasmine' }
+verbose addNamed [ 'jasmine', '' ]
+verbose addNamed [ null, '' ]
+silly name, range, hasData [ 'jasmine', '', false ]
+verbose raw, before any munging jasmine
+verbose url resolving [ 'https://registry.npmjs.org/', './jasmine' ]
+verbose url resolved https://registry.npmjs.org/jasmine
+http GET https://registry.npmjs.org/jasmine
+http 404 https://registry.npmjs.org/jasmine
+silly get cb [ 404,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     date: 'Sun, 18 Mar 2012 21:03:47 GMT',
+silly get cb     'content-type': 'application/json',
+silly get cb     'content-length': '52',
+silly get cb     'cache-control': 'must-revalidate' } ]
+ERR! 404 'jasmine' is not in the npm registry.
+ERR! 404 You should bug the author to publish it
+ERR! 404 Note that you can also install from a
+ERR! 404 tarball, folder, or http url, or git url.
+ERR! 
+ERR! System Darwin 10.8.0
+ERR! command "node" "/usr/local/bin/npm" "install" "jasmine"
+ERR! cwd /Users/davidbeveridge/projects/clasico
+ERR! node -v v0.7.4
+ERR! npm -v 1.1.1
+ERR! code E404
+ERR! message 404 Not Found: jasmine
+ERR! errno {}
+verbose exit [ 1, true ]
