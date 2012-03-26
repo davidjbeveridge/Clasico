@@ -54,4 +54,18 @@ describe("Class", function(){
 		
 	});
 	
+	it("should get an error when implementing an interface without the required methods.", function(){
+	  function badInterface(){
+	    var Loud = new Interface({
+  	    yell: (new Function)
+  	  })
+  	  var Person = new Class({
+  	    implements: Loud
+  		}); 
+	  }
+		
+		expect(badInterface).toThrow()
+		
+	})
+	
 });
